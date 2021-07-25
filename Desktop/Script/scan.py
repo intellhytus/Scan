@@ -1,15 +1,18 @@
 #!/usr/bin/python3
 import whois
 import socket
+import ssl
+import nmap
+from pyfiglet import Figlet
 
 def primeiro():
-    dominio = input("Alvo:")
+    dominio = input("[*] Alvo:")
     consulta = whois.whois(dominio)
     return print (consulta.text)
 
 
 def segundo():
-    dominio = input("Alvo:")
+    dominio = input("[*] Alvo:")
     brute = ["ns1", "ns2", "ns3", "ns4", "www", "ftp", "intranet", "mail"]
 
     for nome in brute:
@@ -20,9 +23,9 @@ def segundo():
             pass
 
 def sub():
-    dominio = input("Alvo:")
+    dominio = input("[*] Alvo:")
     brute = ["www", "ftp", "intranet"]
-    brute2 = ["login/", "admin", "adm", "gestao", "privado"]
+    brute2 = ["login/", "admin", "adm",]
 
     for name in brute:
         pag = name + "." + dominio
@@ -35,26 +38,63 @@ def sub():
                 teste1 = print (pag3 +": " + socket.gethostbyname(pag2)) 
             except socket.gaierror:
                 pass
+def nm():
+
+    choice = input("[1] Apenas uma porta\n[2] Mais de uma porta\n>>")
+
+    if choice == "2":
+        target = input("[*] Alvo (IP):")
+
+        begin = input("[I] Porta inicial: ")
+        end = input("[F] Porta final:")
+
+        bg = int(begin)
+        en = int(end)
+
+        scanner = nmap.PortScanner()
+
+        for i in range(bg,en+1):
+            res = scanner.scan(target,str(i))
+            res = res['scan'][target]['tcp'][i]['state']
+            print(f'[*] Port:  {i} | State: {res}.')
+    elif choice == "1":
+        target = input("[*] Alvo (IP):")
+
+        porta = input("[P] Porta:")
+        p = int(porta)
+
+        scanner = nmap.PortScanner()
+
+        
+        res = scanner.scan(target,str(p))
+        res = res['scan'][target]['tcp'][p]['state']
+        print(f'[*] Port: {p} | State: {res}.')
 
 def inicio():
-    print("Made By: @intellhytus")
+    print("[*] O programa está em execução")
+    print("[*] Digite <Ctrl + C> para sair")
+    fig = Figlet(font='standard')
+    print("[*] Made By:")
+    print(fig.renderText('@ Intellhytus'))
     
     
-inicio()          
+inicio()
 
-pedido = input("\n\n\n\n\nWhois: Digite 1\nPaginas e DNS: Digite 2\nSub-Dominios e DNS: Digite 3\nEscolha: ")
+
+pedido = input("\n\n\n[1] Whois\n[2] Paginas e DNS\n[3] Sub-Dominios e DNS\n[4] PortScan\n[-] Escolha:")
 
 def opc():
     if pedido == "1":
         primeiro()
-
+        
     elif pedido == "2":
         segundo()
 
     elif pedido == "3":
         sub()
-
+    elif pedido == "4":
+        nm()
     else:
-        print("Nao valido")
+        print("[x] Nao valido")
 
 opc()
