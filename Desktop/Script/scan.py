@@ -13,7 +13,7 @@ def primeiro():
 
 def segundo():
     dominio = input("[*] Alvo:")
-    brute = ["ns1", "ns2", "ns3", "ns4", "www", "ftp", "intranet", "mail"]
+    brute = ["ns1", "ns2", "ns3", "ns4", "www", "ftp", "intranet", "mail","adm"]
 
     for nome in brute:
         DNS = nome + "." + dominio
@@ -86,10 +86,8 @@ pedido = input("\n\n\n[1] Whois\n[2] Paginas e DNS\n[3] Sub-Dominios e DNS\n[4] 
 def opc():
     if pedido == "1":
         primeiro()
-        
     elif pedido == "2":
         segundo()
-
     elif pedido == "3":
         sub()
     elif pedido == "4":
