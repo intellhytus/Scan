@@ -8,4 +8,4 @@ O código é baseado em 4 opções por enquanto
 
 3 - Realiza a varredura procurando por subdomínios importantes como intranets.
 
-4 - Utiliza a biblioteca "python-nmap" para fazer um scan de portas e serviços.
+4 - Realiza scan de portas e serviços.
